@@ -1,31 +1,31 @@
 # ClassroomHub
 
-ClassroomHub is a small Django site built in **Lab 6** to practise the
-request flow **URL → view → template → response**. It has a shared base
-template, named-route navigation and example learning resources sent from
-the views.
+ClassroomHub es un sitio pequeño en Django construido en el **Laboratorio 6** para
+practicar el flujo de una solicitud **URL → vista → plantilla → respuesta**. Tiene
+una plantilla base compartida, navegación mediante nombres de rutas y recursos de
+aprendizaje de ejemplo enviados desde las vistas.
 
-## Requirements
+## Requisitos
 
 - Python 3.12 – 3.15
-- Django 6.1.3 (pinned in `requirements.txt`)
+- Django 6.1.3 (versión fijada en `requirements.txt`)
 
-> With Python 3.10 or 3.11 use `Django==5.2.19` instead and update
-> `requirements.txt` accordingly.
+> Con Python 3.10 u 3.11 utiliza `Django==5.2.19` y actualiza
+> `requirements.txt` según corresponda.
 
-## Setup
+## Instalación
 
 ```bash
 python -m venv .venv
 ```
 
-Activate the environment:
+Activa el entorno:
 
 - Windows PowerShell: `.\.venv\Scripts\Activate.ps1`
-  (or call `.\.venv\Scripts\python.exe` directly)
+  (o ejecuta directamente `.\.venv\Scripts\python.exe`)
 - Linux/macOS: `source .venv/bin/activate`
 
-Install dependencies and verify:
+Instala las dependencias y verifica:
 
 ```bash
 python -m pip install -r requirements.txt
@@ -34,37 +34,37 @@ python manage.py test pages
 python manage.py runserver
 ```
 
-Open <http://127.0.0.1:8000/>. (A warning about unapplied migrations is
-expected: this lab does not use the database.)
+Abre <http://127.0.0.1:8000/>. (Es normal que aparezca un aviso de migraciones
+pendientes: este laboratorio no utiliza la base de datos).
 
-## Public routes
+## Rutas públicas
 
-| URL           | View        | Template                 |
+| URL           | Vista       | Plantilla                |
 |---------------|-------------|--------------------------|
 | `/`           | `home`      | `pages/home.html`        |
 | `/resources/` | `resources` | `pages/resources.html`   |
 | `/about/`     | `about`     | `pages/about.html`       |
 
-Any other address returns `404 Not Found`.
+Cualquier otra dirección devuelve `404 Not Found`.
 
-## Project structure
+## Estructura del proyecto
 
-- `config/` – project settings and main URLconf (`include("pages.urls")`).
-- `pages/` – application with views, URLs, tests and templates in
-  `pages/templates/pages/`. Every page extends `base.html`.
+- `config/` – configuración del proyecto y URLconf principal (`include("pages.urls")`).
+- `pages/` – aplicación con vistas, URLs, pruebas y plantillas en
+  `pages/templates/pages/`. Todas las páginas heredan de `base.html`.
 
-## Tests
+## Pruebas
 
-`python manage.py test pages` runs 5 tests (`SimpleTestCase`, no database):
-status codes, templates, example data, navigation and 404.
+`python manage.py test pages` ejecuta 5 pruebas (`SimpleTestCase`, sin base de datos):
+códigos de estado, plantillas, datos de ejemplo, navegación y 404.
 
-## Not included yet
+## Funcionalidades pendientes
 
-- Models, database persistence or migrations of our own (Lab 7)
-- Admin management of resources
-- Forms, user input, login/authentication
-- Create/edit/delete (CRUD) of resources
-- Static files and production deployment
+- Modelos, persistencia en base de datos o migraciones propias (Laboratorio 7)
+- Administración de recursos desde el panel de administración
+- Formularios, entradas de usuario e inicio de sesión/autenticación
+- Crear, editar y eliminar (CRUD) recursos
+- Archivos estáticos y despliegue en producción
 
-Resources are example data defined in `pages/views.py`, so they reset every
-time the server starts.
+Los recursos son datos de ejemplo definidos en `pages/views.py`, por lo que vuelven
+a sus valores iniciales cada vez que se inicia el servidor.
