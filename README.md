@@ -37,6 +37,43 @@ python manage.py runserver
 Abre <http://127.0.0.1:8000/>. (Es normal que aparezca un aviso de migraciones
 pendientes: este laboratorio no utiliza la base de datos).
 
+## Entorno virtual (`.venv`)
+
+El proyecto utiliza un entorno virtual `.venv` para aislar sus dependencias del
+Python instalado en el sistema. Así cada proyecto tiene sus propias versiones de
+Django y de las demás librerías.
+
+- **`.venv/` no se incluye en el repositorio.** Está excluido en `.gitignore`
+  porque es pesado, depende del sistema operativo (un entorno creado en Windows
+  no funciona en Linux) y puede reconstruirse en cualquier equipo.
+- **`requirements.txt` sí se incluye**, porque registra las versiones exactas
+  necesarias para recrear el entorno:
+
+```bash
+python -m venv .venv
+python -m pip install -r requirements.txt
+```
+
+- Para comprobar que se está usando el Python del entorno:
+
+```bash
+python -c "import sys; print(sys.executable)"
+```
+
+  La ruta mostrada debe estar dentro de la carpeta `.venv`.
+
+- Para ver las librerías instaladas en el entorno:
+
+```bash
+python -m pip list
+```
+
+- En Linux, si el comando `python` no existe, utiliza `python3` para crear el
+  entorno; una vez activado, `python` apunta al intérprete del `.venv`.
+
+Otros archivos excluidos en `.gitignore`: `__pycache__/`, `*.py[cod]`, `*.log`,
+`.env` y `db.sqlite3`.
+
 ## Rutas públicas
 
 | URL           | Vista       | Plantilla                |
