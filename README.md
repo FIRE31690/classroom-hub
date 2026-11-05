@@ -7,13 +7,22 @@ aprendizaje de ejemplo enviados desde las vistas.
 
 ## Requisitos
 
-- Python 3.12 – 3.15
+- Python 3.12 – 3.15 (el proyecto se desarrolló con Python 3.14.2)
 - Django 6.1.3 (versión fijada en `requirements.txt`)
 
 > Con Python 3.10 u 3.11 utiliza `Django==5.2.19` y actualiza
 > `requirements.txt` según corresponda.
 
 ## Instalación
+
+Clona el repositorio y entra en la carpeta:
+
+```bash
+git clone https://github.com/FIRE31690/classroom-hub.git
+cd classroom-hub
+```
+
+Crea el entorno virtual:
 
 ```bash
 python -m venv .venv
@@ -44,35 +53,69 @@ Python instalado en el sistema. Así cada proyecto tiene sus propias versiones d
 Django y de las demás librerías.
 
 - **`.venv/` no se incluye en el repositorio.** Está excluido en `.gitignore`
-  porque es pesado, depende del sistema operativo (un entorno creado en Windows
-  no funciona en Linux) y puede reconstruirse en cualquier equipo.
+  porque es pesado, depende del sistema operativo y puede reconstruirse en
+  cualquier equipo a partir de `requirements.txt`.
 - **`requirements.txt` sí se incluye**, porque registra las versiones exactas
   necesarias para recrear el entorno:
 
-```bash
-python -m venv .venv
-python -m pip install -r requirements.txt
+```text
+asgiref==3.13.0
+Django==6.1.3
+sqlparse==0.6.1
+tzdata==2026.6
 ```
 
-- Para comprobar que se está usando el Python del entorno:
+### Entorno de Windows
+
+El `.venv` original del proyecto se creó en **Windows con Python 3.14.2**.
+Contiene la carpeta `Scripts\` y el ejecutable `python.exe`, por lo que solo
+funciona en Windows:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+python manage.py runserver
+```
+
+### Entorno de Linux
+
+Un entorno virtual no se puede trasladar entre sistemas operativos: el `.venv`
+creado en Windows no funciona en Linux. Para ejecutar el proyecto en Linux, sin
+borrar el entorno de Windows, se crea un segundo entorno llamado `.venv-linux`
+(también excluido en `.gitignore`):
+
+```bash
+python3 -m venv .venv-linux
+source .venv-linux/bin/activate
+python -m pip install -r requirements.txt
+python manage.py runserver
+```
+
+En Linux el comando del sistema es `python3`; una vez activado el entorno,
+`python` apunta al intérprete del entorno virtual.
+
+### Comprobaciones útiles
+
+Verificar que se está usando el Python del entorno (la ruta debe estar dentro de
+`.venv` o `.venv-linux`):
 
 ```bash
 python -c "import sys; print(sys.executable)"
 ```
 
-  La ruta mostrada debe estar dentro de la carpeta `.venv`.
-
-- Para ver las librerías instaladas en el entorno:
+Ver las librerías instaladas en el entorno activo:
 
 ```bash
 python -m pip list
 ```
 
-- En Linux, si el comando `python` no existe, utiliza `python3` para crear el
-  entorno; una vez activado, `python` apunta al intérprete del `.venv`.
+Ver las librerías del `.venv` de Windows desde Linux (sin ejecutarlo):
 
-Otros archivos excluidos en `.gitignore`: `__pycache__/`, `*.py[cod]`, `*.log`,
-`.env` y `db.sqlite3`.
+```bash
+ls .venv/Lib/site-packages | grep dist-info
+```
+
+Archivos excluidos en `.gitignore`: `.venv/`, `.venv-linux/`, `__pycache__/`,
+`*.py[cod]`, `*.log`, `.env` y `db.sqlite3`.
 
 ## Rutas públicas
 
@@ -85,6 +128,36 @@ Otros archivos excluidos en `.gitignore`: `__pycache__/`, `*.py[cod]`, `*.log`,
 Cualquier otra dirección devuelve `404 Not Found`.
 
 ## Estructura del proyecto
+
+```text
+classroom-hub/
+├── .gitignore
+├── README.md
+├── requirements.txt
+├── manage.py
+├── config/
+│   ├── __init__.py
+│   ├── settings.py
+│   ├── urls.py
+│   ├── asgi.py
+│   └── wsgi.py
+└── pages/
+    ├── __init__.py
+    ├── admin.py
+    ├── apps.py
+    ├── migrations/
+    │   └── __init__.py
+    ├── models.py
+    ├── tests.py
+    ├── urls.py
+    ├── views.py
+    └── templates/
+        └── pages/
+            ├── base.html
+            ├── home.html
+            ├── resources.html
+            └── about.html
+```
 
 - `config/` – configuración del proyecto y URLconf principal (`include("pages.urls")`).
 - `pages/` – aplicación con vistas, URLs, pruebas y plantillas en
